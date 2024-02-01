@@ -2,11 +2,23 @@ import mongoose from "mongoose"
 
 const { Schema, model } = mongoose
 
-const tasksSchema = new Schema(
+const taskSchema = new Schema(
   {
-    task: { type: String, required: true, trim: true, maxlength: 150 },
+    task: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 150,
+    },
   },
-  { timestamps: true }
+  { timestamps: { createdAt: true, updatedAt: true } }
 )
 
-export default model("Tasks", tasksSchema)
+const tasksListSchema = new Schema(
+  {
+    tasks: [taskSchema],
+  },
+  { timestamps: { createdAt: true, updatedAt: true } }
+)
+
+export default model("TasksList", tasksListSchema)
