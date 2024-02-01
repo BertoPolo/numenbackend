@@ -50,6 +50,5 @@ mongoose.connection.on("connected", () => {
   server.listen(port, () => {
     console.table(listEndpoints(server))
     console.log(`Server is running on port ${port}`)
-    V1SwaggerDocs(server, port)
   })
 })
