@@ -5,7 +5,7 @@ import cors from "cors"
 import createError from "http-errors"
 
 import usersRouter from "../users/index.js"
-import tasksRouter from "../users/index.js"
+import tasksRouter from "../tasks/index.js"
 
 import { genericErrorHandler, notFoundErrorHandler, badRequestErrorHandler, unauthorizedErrorHandler } from "./errorHandlers.js"
 import apiLimiter from "../tools/requestRestriction.js"
