@@ -2,7 +2,7 @@ import mongoose from "mongoose"
 
 const { Schema, model } = mongoose
 
-const taskSchema = new Schema(
+const tasksSchema = new Schema(
   {
     task: {
       type: String,
@@ -16,11 +16,4 @@ const taskSchema = new Schema(
   { timestamps: { createdAt: true, updatedAt: true } }
 )
 
-const tasksListSchema = new Schema(
-  {
-    tasks: [taskSchema],
-  },
-  { timestamps: { createdAt: true, updatedAt: true } }
-)
-
-export default model("TasksList", tasksListSchema)
+export default model("Tasks", tasksSchema)

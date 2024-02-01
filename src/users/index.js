@@ -11,19 +11,16 @@ const usersRouter = express.Router()
 //POST create a new token
 usersRouter.post("/login", async (req, res, next) => {
   try {
-    // 1. Obtain credentials from req.body
     const { email, password } = req.body
 
-    // 2. Verify credentials
     const user = await usersSchema.checkCredentials(email, password)
 
     if (user) {
-      // 3. If credentials are ok --> generate an access token and send it as a response
-
+      // If credentials are ok --> generate an access token and send it as a response
       const accessToken = await generateAccessToken({ _id: user._id })
       res.status(201).send({ accessToken })
     } else {
-      // 4. If credentials are not ok --> throw an error (401)
+      // If credentials are not ok --> throw an error (401)
       next(createError(401, "Credentials are not ok!"))
     }
   } catch (error) {
