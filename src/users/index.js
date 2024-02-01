@@ -18,7 +18,7 @@ usersRouter.post("/login", async (req, res, next) => {
     if (user) {
       // If credentials are ok --> generate an access token and send it as a response
       const accessToken = await generateAccessToken({ _id: user._id })
-      res.status(201).send({ accessToken })
+      res.status(201).send({ accessToken, email })
     } else {
       // If credentials are not ok --> throw an error (401)
       next(createError(401, "Credentials are not ok!"))
