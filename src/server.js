@@ -4,8 +4,8 @@ import listEndpoints from "express-list-endpoints"
 import cors from "cors"
 import createError from "http-errors"
 
-import usersRouter from "./api/routes/user.js"
-import tasksRouter from "./api/routes/task.js"
+import usersRouter from "./api/user/users.routes.js"
+import tasksRouter from "./api/task/tasks.routes.js"
 
 import { genericErrorHandler, notFoundErrorHandler, badRequestErrorHandler, unauthorizedErrorHandler } from "./middlewares/errorHandlers.js"
 import apiLimiter from "./middlewares/requestRestriction.js"
