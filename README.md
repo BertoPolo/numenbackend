@@ -1,35 +1,10 @@
 <a name="readme-top"></a>
 
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
-  <a href="https://github.com/othneildrew/Best-README-Template"></a>
--->
-
-<!-- PROJECT LOGO -->
+<!-- PROJECT Title -->
 <br />
 <div align="center">
-    <img src="public/STR_LOGIN.avif" alt="Logo" width="350" height="200">
-  
-  <h1 align="center">Stuff To Route</h1>
-
-   <p align="center">
-    E-commerce made for bikers to bikers!
-    <br />
-    <br />
-    <a href="https://stufftoroute.vercel.app" target="_blank" rel="noopener noreferrer">View Demo</a>
-    ·
-    <a href="https://pagespeed.web.dev/analysis/https-stufftoroute-vercel-app/7hlq5fiq11?form_factor=mobile" target="_blank" rel="noopener noreferrer">
-      SEO score
-    </a>
-  </p>
+  <h1 align="center">To do List Backend</h1>
 </div>
-
-## Website and README.md are in construction
 
 <br/>
 
@@ -40,10 +15,8 @@
     <li>
       <a href="#usage">Usage</a>
       <ul>
-      <li><a href="#stripe-demo-payment">Stripe demo payment</a></li>
-      <li><a href="#demo-users">Demo Users</a></li>
       <li><a href="#about-the-project">About The Project</a></li>
-        <li><a href="#built-with">Built With</a></li>
+      <li><a href="#built-with">Built With</a></li>
       </ul>      
     </li>
     <li>
@@ -52,26 +25,11 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
-
-## Usage
-
-### Stripe demo payment
-
-Use this payment method to fake a purchase: 4242 4242 4242 4242 01/28 424 22222
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-### Demo users
-
-admin / 123
-<br/>
-user / 123
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -79,22 +37,16 @@ user / 123
 
 ### About The Project
 
-E-commerce for bikers specialized products. You can enjoy an intuitive shopping experience with your computer or your phone. To see all the features you need an admin access.
+This project is made to manage a TO DO list
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
 
 - [![Javascript][Javascript.img]][Javascript-url]
-- [![React.js][React.js]][React-url]
-- [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-- [![Redux][Redux.img]][Redux-url]
 - [![Express.js][Express.img]][Express-url]
 - [![Mongoose][Mongoose.img]][Mongoose-url]
-- [![Swagger][Swagger.img]][Swagger-url]
-- [![Stripe][Stripe.img]][Stripe-url]
 - [![JsonWebToken][JsonWebToken.img]][JsonWebToken-url]
-- [![Nodemailer][Nodemailer.img]][Nodemailer-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
