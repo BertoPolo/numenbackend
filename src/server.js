@@ -4,11 +4,11 @@ import listEndpoints from "express-list-endpoints"
 import cors from "cors"
 import createError from "http-errors"
 
-import usersRouter from "../users/index.js"
-import tasksRouter from "../tasks/index.js"
+import usersRouter from "./api/routes/user.js"
+import tasksRouter from "./api/routes/task.js"
 
-import { genericErrorHandler, notFoundErrorHandler, badRequestErrorHandler, unauthorizedErrorHandler } from "./errorHandlers.js"
-import apiLimiter from "../tools/requestRestriction.js"
+import { genericErrorHandler, notFoundErrorHandler, badRequestErrorHandler, unauthorizedErrorHandler } from "./middlewares/errorHandlers.js"
+import apiLimiter from "./middlewares/requestRestriction.js"
 
 mongoose.set("strictQuery", false)
 

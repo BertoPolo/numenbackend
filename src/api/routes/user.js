@@ -1,10 +1,10 @@
-import usersSchema from "./model.js"
+import usersSchema from "../../models/user.js"
 import express from "express"
 import createError from "http-errors"
 // import q2m from "query-to-mongo"
 
 // import { JWTAuthMiddleware } from "../auth/token.js"
-import { generateAccessToken } from "../auth/tools.js"
+import { generateAccessToken } from "../../middlewares/auth/tools.js"
 
 const usersRouter = express.Router()
 
