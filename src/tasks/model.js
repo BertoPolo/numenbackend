@@ -4,12 +4,8 @@ const { Schema, model } = mongoose
 
 const tasksSchema = new Schema(
   {
-    task: {
-      type: String,
-      required: true,
-      trim: true,
-      maxlength: 150,
-    },
+    task: { type: String, required: true, trim: true, maxlength: 150 },
+    title: { type: String, required: true, trim: true, maxlength: 20 },
     done: { type: Boolean, default: false, trim: true },
     createdBy: { type: String, required: true, trim: true, maxlength: 30 },
   },
