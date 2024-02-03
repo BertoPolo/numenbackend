@@ -1,9 +1,9 @@
 import usersSchema from "../../models/user.js"
 import express from "express"
 import createError from "http-errors"
-// import q2m from "query-to-mongo"
+import q2m from "query-to-mongo"
 
-// import { JWTAuthMiddleware } from "../auth/token.js"
+import { JWTAuthMiddleware } from "../../middlewares/auth/token.js"
 import { generateAccessToken } from "../../middlewares/auth/tools.js"
 
 const usersRouter = express.Router()
@@ -17,7 +17,7 @@ usersRouter.post("/login", async (req, res, next) => {
 
     if (user) {
       // If credentials are ok --> generate an access token and send it as a response
-      const accessToken = await generateAccessToken({ _id: user._id })
+      const accessToken = await generateAccessToken({ _id: user._id, email })
       res.status(201).send({ accessToken, email })
     } else {
       // If credentials are not ok --> throw an error (401)
@@ -50,53 +50,53 @@ usersRouter.post("/", async (req, res, next) => {
 })
 
 // //Get searched users
-// usersRouter.get("/", JWTAuthMiddleware, async (req, res, next) => {
-//   try {
-//     const queryToMongo = q2m(req.query)
-//     console.log(queryToMongo)
-//     const users = await usersSchema
-//       .find(queryToMongo.criteria)
-//       .limit(queryToMongo.options.limit)
-//       .skip(queryToMongo.options.skip)
-//       .sort(queryToMongo.options.sort)
+usersRouter.get("/", JWTAuthMiddleware, async (req, res, next) => {
+  try {
+    const queryToMongo = q2m(req.query)
+    console.log(queryToMongo)
+    const users = await usersSchema
+      .find(queryToMongo.criteria)
+      .limit(queryToMongo.options.limit)
+      .skip(queryToMongo.options.skip)
+      .sort(queryToMongo.options.sort)
 
-//     if (users) res.status(200).send(users)
-//     else next(createError(404, `no users found`))
-//   } catch (error) {
-//     console.log(error)
-//     next(error)
-//   }
-// })
+    if (users) res.status(200).send(users)
+    else next(createError(404, `no users found`))
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
+})
 
 // //PUT account data
-// usersRouter.put("/:userId", JWTAuthMiddleware, async (req, res, next) => {
-//   try {
-//     const user = await usersSchema.findByIdAndUpdate(
-//       req.params.userId,
-//       {
-//         ...req.body,
-//       },
-//       { new: true }
-//     )
-//     if (user) res.status(201).send(user)
-//     else next(createError(404, `no users found`))
-//   } catch (error) {
-//     console.log(error)
-//     next(error)
-//   }
-// })
+usersRouter.put("/:userId", JWTAuthMiddleware, async (req, res, next) => {
+  try {
+    const user = await usersSchema.findByIdAndUpdate(
+      req.params.userId,
+      {
+        ...req.body,
+      },
+      { new: true }
+    )
+    if (user) res.status(201).send(user)
+    else next(createError(404, `no users found`))
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
+})
 
 // //Delete user
-// usersRouter.delete("/:userId", JWTAuthMiddleware, async (req, res, next) => {
-//   try {
-//     const userToDelete = await usersSchema.findByIdAndDelete(req.params.userId)
+usersRouter.delete("/:userId", JWTAuthMiddleware, async (req, res, next) => {
+  try {
+    const userToDelete = await usersSchema.findByIdAndDelete(req.params.userId)
 
-//     if (userToDelete) res.status(200).send({ message: "deleted successfully" })
-//     else next(createError(404, `User not found`))
-//   } catch (error) {
-//     console.log(error)
-//     next(error)
-//   }
-// })
+    if (userToDelete) res.status(200).send({ message: "deleted successfully" })
+    else next(createError(404, `User not found`))
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
+})
 
 export default usersRouter

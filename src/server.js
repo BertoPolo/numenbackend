@@ -13,7 +13,7 @@ import apiLimiter from "./middlewares/requestRestriction.js"
 mongoose.set("strictQuery", false)
 
 const server = express()
-const port = process.env.PORT || 3001
+const port = process.env.PORT || 3004
 const urlList = [process.env.FE_DEV_URL, process.env.FE_PROD_URL]
 
 //****************** MIDDLEWARES *********************
