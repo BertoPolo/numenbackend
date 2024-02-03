@@ -9,12 +9,16 @@ import tasksRouter from "./api/task/tasks.routes.js"
 
 import { genericErrorHandler, notFoundErrorHandler, badRequestErrorHandler, unauthorizedErrorHandler } from "./middlewares/errorHandlers.js"
 import apiLimiter from "./middlewares/requestRestriction.js"
+import connectDB from "./config/db.js"
+import config from "./config/index.js"
+
+connectDB()
 
 mongoose.set("strictQuery", false)
 
 const server = express()
-const port = process.env.PORT || 3004
-const urlList = [process.env.FE_DEV_URL, process.env.FE_PROD_URL]
+const port = config.port
+const urlList = [config.frontendDevUrl, config.frontendProdUrl]
 
 //****************** MIDDLEWARES *********************
 server.use(
@@ -43,13 +47,13 @@ server.use(unauthorizedErrorHandler) // 401
 server.use(notFoundErrorHandler) // 404
 server.use(genericErrorHandler) // 500
 
-mongoose.connect(process.env.MONGO_CONNECTION)
+// mongoose.connect(process.env.MONGO_CONNECTION)
 
-mongoose.connection.on("connected", () => {
-  console.log("Connected to Mongo")
+// mongoose.connection.on("connected", () => {
+//   console.log("Connected to Mongo")
 
-  server.listen(port, () => {
-    console.table(listEndpoints(server))
-    console.log(`Server is running on port ${port}`)
-  })
+server.listen(port, () => {
+  console.table(listEndpoints(server))
+  console.log(`Server is running on port ${port}`)
 })
+// })
