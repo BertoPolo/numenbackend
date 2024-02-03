@@ -3,6 +3,7 @@ import mongoose from "mongoose"
 import listEndpoints from "express-list-endpoints"
 import cors from "cors"
 import createError from "http-errors"
+import helmet from "helmet"
 
 import usersRouter from "./api/user/users.routes.js"
 import tasksRouter from "./api/task/tasks.routes.js"
@@ -33,6 +34,7 @@ server.use(
   })
 )
 server.use(express.json())
+server.use(helmet())
 
 // ****************** ENDPOINTS  *********************
 server.use("/tasks", tasksRouter)
