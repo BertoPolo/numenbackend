@@ -60,7 +60,7 @@ To get started with this project, follow the steps below:
 
 Follow these instructions to clone and set up the application on your local machine:
 
-1. You can clone my interface at [https://github.com/BertoPolo/numentech]
+1. You can clone my interface at [https://github.com/BertoPolo/todolist-interface]
 2. Clone the repository
    ```sh
    git clone https://github.com/BertoPolo/numenbackend.git
