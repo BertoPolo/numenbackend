@@ -68,6 +68,19 @@ usersRouter.get("/", JWTAuthMiddleware, async (req, res, next) => {
   }
 })
 
+// //Get yourself data
+usersRouter.get("/me", JWTAuthMiddleware, async (req, res, next) => {
+  try {
+    //just send the token and you receive the data
+    const user = await usersSchema.findById(req.user)
+    if (user) res.status(200).send(user)
+    else next(createError(404, `No user found`))
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
+})
+
 // //PUT account data
 usersRouter.put("/:userId", JWTAuthMiddleware, async (req, res, next) => {
   try {
