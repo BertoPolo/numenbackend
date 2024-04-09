@@ -7,6 +7,7 @@ const usersSchema = new Schema(
   {
     email: { type: String, required: true, trim: true },
     password: { type: String, required: true },
+    // secondFactor: { type: Boolean, required: true },
     // phone: { type: String, trim: true }, should be encrypted?
     // prefix: { type: String, trim: true },IF PHONE=> required
   },
