@@ -18,10 +18,10 @@ usersRouter.post("/login", async (req, res, next) => {
 
     if (user) {
       if (!user.isVerified) {
-        res.status(200).json({ isVerified: false, email })
+        res.status(200).json({ isVerified: false })
       } else {
         const accessToken = await generateAccessToken({ _id: user._id, email })
-        res.status(201).json({ accessToken, email, isVerified: true })
+        res.status(201).json(accessToken)
       }
     } else {
       next(createError(401, "Credentials are not ok!"))

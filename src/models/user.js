@@ -10,6 +10,7 @@ const usersSchema = new Schema(
     themeColors: { type: [String] },
     reminders: { type: [String] },
     timeZone: { type: String },
+    lastLogin: { type: Date },
     randomNumber: { type: Number, required: true, default: 45678 },
     tasks: { type: [String], index: { unique: true } },
     isVerified: { type: Boolean, default: false },
