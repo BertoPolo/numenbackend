@@ -13,14 +13,43 @@ usersRouter.post("/login", async (req, res, next) => {
   try {
     const { email, password } = req.body
 
+    // Verificar las credenciales del usuario
     const user = await usersSchema.checkCredentials(email, password)
 
     if (user) {
-      if (user.isVerified === false) res.status(200).send({ isVerified: false })
-      const accessToken = await generateAccessToken({ _id: user._id, email })
-      res.status(201).send({ accessToken, email })
+      if (!user.isVerified) {
+        res.status(200).json({ isVerified: false, email })
+      } else {
+        const accessToken = await generateAccessToken({ _id: user._id, email })
+        res.status(201).json({ accessToken, email, isVerified: true })
+      }
     } else {
       next(createError(401, "Credentials are not ok!"))
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+//POST verify verification code, update isVerified and then create token
+usersRouter.post("/verificationcode", async (req, res, next) => {
+  try {
+    const { email, code, password } = req.body
+
+    const user = await usersSchema.checkCredentials(email, password)
+    if (user) {
+      console.log(user)
+      if (user.randomNumber === code) {
+        user.isVerified = true
+        await user.save()
+
+        const accessToken = await generateAccessToken({ _id: user._id, email })
+        res.status(200).json({ accessToken, email, isVerified: true })
+      } else {
+        res.status(404).send("Invalid verification code")
+      }
+    } else {
+      res.status(401).send("User not found")
     }
   } catch (error) {
     next(error)
@@ -31,12 +60,12 @@ usersRouter.post("/login", async (req, res, next) => {
 usersRouter.post("/", async (req, res, next) => {
   try {
     const emailLowerCase = req.body.email.toLowerCase()
-
     const doesUserAlreadyExists = await usersSchema.findOne({ email: emailLowerCase })
     if (!doesUserAlreadyExists) {
       const newUser = new usersSchema({
         ...req.body,
         email: emailLowerCase,
+        randomNumber: Math.floor(Math.random() * 10000),
       })
       const { _id } = await newUser.save()
 
