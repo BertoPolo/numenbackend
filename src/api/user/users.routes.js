@@ -38,7 +38,6 @@ usersRouter.post("/verificationcode", async (req, res, next) => {
 
     const user = await usersSchema.checkCredentials(email, password)
     if (user) {
-      console.log(user)
       if (user.randomNumber === code) {
         user.isVerified = true
         await user.save()
