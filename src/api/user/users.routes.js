@@ -14,7 +14,6 @@ usersRouter.post("/login", async (req, res, next) => {
   try {
     const { email, password } = req.body
 
-    // Verificar las credenciales del usuario
     const user = await usersSchema.checkCredentials(email, password)
 
     if (user) {
