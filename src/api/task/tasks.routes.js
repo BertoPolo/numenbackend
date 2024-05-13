@@ -10,7 +10,7 @@ const tasksRouter = express.Router()
 //POST new Task
 tasksRouter.post("/", JWTAuthMiddleware, async (req, res, next) => {
   try {
-    const newTask = new tasksSchema(req.body)
+    const newTask = new tasksSchema({ ...req.body, createdBy: req.user._id })
     const { _id } = await newTask.save()
 
     res.status(201).send(_id)

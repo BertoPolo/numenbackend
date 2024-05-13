@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 import bcrypt from "bcrypt"
 
-const { Schema, model } = mongoose
+const { Schema, model, Types } = mongoose
 
 const usersSchema = new Schema(
   {
@@ -11,8 +11,8 @@ const usersSchema = new Schema(
     reminders: { type: [String] },
     timeZone: { type: String },
     lastLogin: { type: Date },
-    randomNumber: { type: Number, required: true, default: 45678 },
-    tasks: { type: [String], index: { unique: true } },
+    randomNumber: { type: Number, required: true, default: 44168 },
+    tasks: [{ type: Types.ObjectId, ref: "Tasks" }],
     isVerified: { type: Boolean, default: false },
     // phone: { type: String, trim: true }, should be encrypted?
     // prefix: { type: String, trim: true },IF PHONE=> required

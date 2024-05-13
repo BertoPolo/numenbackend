@@ -1,4 +1,4 @@
-import Task from "./task.routes.js"
+import Task from "./tasks.routes.js"
 
 export const getAllTasks = async (req, res) => {
   try {
