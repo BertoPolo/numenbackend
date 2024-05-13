@@ -2,6 +2,7 @@ import usersSchema from "../../models/user.js"
 import express from "express"
 import createError from "http-errors"
 import q2m from "query-to-mongo"
+import nodemailer from "nodemailer"
 
 import { JWTAuthMiddleware } from "../../middlewares/auth/token.js"
 import { generateAccessToken } from "../../middlewares/auth/tools.js"
@@ -55,18 +56,38 @@ usersRouter.post("/verificationcode", async (req, res, next) => {
   }
 })
 
-//POST a new user
+//POST a new user and send an email notification with verification code
 usersRouter.post("/", async (req, res, next) => {
   try {
     const emailLowerCase = req.body.email.toLowerCase()
     const doesUserAlreadyExists = await usersSchema.findOne({ email: emailLowerCase })
+    const randomNumber = Math.floor(10000 + Math.random() * 90000)
     if (!doesUserAlreadyExists) {
       const newUser = new usersSchema({
         ...req.body,
         email: emailLowerCase,
-        randomNumber: Math.floor(10000 + Math.random() * 90000),
+        randomNumber: randomNumber,
       })
       const { _id } = await newUser.save()
+
+      const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        auth: {
+          user: process.env.MY_SENDER_EMAIL_USERNAME,
+          pass: process.env.MY_SENDER_EMAIL_PASSWORD,
+        },
+      })
+
+      const info = await transporter.sendMail({
+        from: `"TaskWave" <noreply@taskwave.com>`,
+        to: req.body.email,
+        subject: "Welcome ✔",
+        replyTo: req.body.email,
+        // text: `Welcome aboard!! To log in for the first time, enter this code: ${randomNumber}`,
+        html: `Welcome aboard!! To log in for the first time, enter this code: ${randomNumber}`,
+      })
 
       res.status(201).send(_id)
     } else next(createError(409, `user already exists`))
