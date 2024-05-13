@@ -20,16 +20,15 @@ tasksRouter.post("/", JWTAuthMiddleware, async (req, res, next) => {
   }
 })
 
-//GET ALL Tasks
-tasksRouter.get("/", async (req, res, next) => {
+//GET my tasks
+tasksRouter.get("/", JWTAuthMiddleware, async (req, res, next) => {
   try {
     const queryToMongo = q2m(req.query)
     console.log(queryToMongo)
-    const tasks = await tasksSchema
-      .find(queryToMongo.criteria)
-      .limit(queryToMongo.options.limit)
-      .skip(queryToMongo.options.skip)
-      .sort(queryToMongo.options.sort)
+    const tasks = await tasksSchema.find({ ...queryToMongo.criteria, createdBy: req.user._id })
+    // .limit(queryToMongo.options.limit)
+    // .skip(queryToMongo.options.skip)
+    // .sort(queryToMongo.options.sort)
 
     if (tasks) res.status(200).send(tasks)
     else next(createError(404, `no task found`))
