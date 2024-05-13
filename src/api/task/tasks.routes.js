@@ -41,14 +41,19 @@ tasksRouter.get("/", JWTAuthMiddleware, async (req, res, next) => {
 //PUT Task
 tasksRouter.put("/:taskId", JWTAuthMiddleware, async (req, res, next) => {
   try {
-    const task = await tasksSchema.findByIdAndUpdate(
+    const task = await tasksSchema.findOne({ _id: req.params.taskId, createdBy: req.user._id })
+    if (!task) {
+      return next(createError(404, "Task not found or you do not have permission to modify this task"))
+    }
+
+    const updatedTask = await tasksSchema.findByIdAndUpdate(
       req.params.taskId,
       {
         ...req.body,
       },
       { new: true }
     )
-    if (task) res.status(201).send(task)
+    if (task) res.status(201).send(updatedTask)
     else next(createError(404, `no task found`))
   } catch (error) {
     console.log(error)
