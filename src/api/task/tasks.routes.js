@@ -54,7 +54,7 @@ tasksRouter.put("/:taskId", JWTAuthMiddleware, async (req, res, next) => {
       { new: true }
     )
     if (task) res.status(201).send(updatedTask)
-    else next(createError(404, `no task found`))
+    else next(createError(404, `No task found`))
   } catch (error) {
     console.log(error)
     next(error)
@@ -63,11 +63,16 @@ tasksRouter.put("/:taskId", JWTAuthMiddleware, async (req, res, next) => {
 
 ///DELETE task
 tasksRouter.delete("/:taskId", JWTAuthMiddleware, async (req, res, next) => {
+  const task = await tasksSchema.findOne({ _id: req.params.taskId, createdBy: req.user._id })
+  if (!task) {
+    return next(createError(404, "Task not found or you do not have permission to modify this task"))
+  }
+
   try {
     const tasksToDelete = await tasksSchema.findByIdAndDelete(req.params.taskId)
 
     if (tasksToDelete) {
-      res.status(200).send("task was deleted successfully")
+      res.status(200).send("Task was deleted successfully")
     } else next(createError(404, `this task: ${req.params.taskId}, is not found`))
   } catch (error) {
     next(error)
