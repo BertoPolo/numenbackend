@@ -7,6 +7,7 @@ const tasksSchema = new Schema(
     task: { type: String, required: true, trim: true, maxlength: 150 },
     title: { type: String, required: true, trim: true, maxlength: 20 },
     done: { type: Boolean, default: false },
+    priority: { type: String, enum: ["Low", "Medium", "High"], default: "Low" },
     createdBy: { type: Types.ObjectId, ref: "Users", required: true },
   },
   { timestamps: { createdAt: true, updatedAt: true } }
