@@ -1,5 +1,7 @@
 import User from "./task.routes.js"
 
+//check if is updated
+
 export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find()
