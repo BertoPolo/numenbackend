@@ -12,16 +12,14 @@ const usersRouter = express.Router()
 //POST create a new token
 usersRouter.post("/login", async (req, res, next) => {
   try {
-    const { email, password } = req.body
-
-    const user = await usersSchema.checkCredentials(email, password)
+    const user = await usersSchema.checkCredentials(req.body.email, req.body.password)
 
     if (user) {
       if (!user.isVerified) {
         res.status(200).json({ isVerified: false })
       } else {
-        const accessToken = await generateAccessToken({ _id: user._id, email })
-        res.status(201).json(accessToken)
+        const accessToken = await generateAccessToken({ _id: user._id, email: user.email })
+        res.status(201).send({ accessToken })
       }
     } else {
       next(createError(401, "Credentials are not ok!"))
@@ -42,7 +40,7 @@ usersRouter.post("/verificationcode", async (req, res, next) => {
         user.isVerified = true
         await user.save()
 
-        const accessToken = await generateAccessToken({ _id: user._id, email })
+        const accessToken = await generateAccessToken({ _id: user._id, email: user.email })
         res.status(200).json({ accessToken, email, isVerified: true })
       } else {
         res.status(404).send("Invalid verification code")
