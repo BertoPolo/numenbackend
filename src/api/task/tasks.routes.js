@@ -75,7 +75,7 @@ tasksRouter.put("/:taskId", JWTAuthMiddleware, async (req, res, next) => {
 ///DELETE task
 tasksRouter.delete("/:taskId", JWTAuthMiddleware, async (req, res, next) => {
   try {
-    const deletedTask = await Task.findOneAndDelete({ _id: req.params.taskId, createdBy: req.user._id })
+    const deletedTask = await tasksSchema.findOneAndDelete({ _id: req.params.taskId, createdBy: req.user._id })
     if (!deletedTask) {
       return next(createError(404, "Task not found or you do not have permission to delete this task"))
     }
