@@ -21,6 +21,9 @@ const server = express()
 const port = config.port
 const urlList = [config.frontendDevUrl, config.frontendProdUrl]
 
+// ****************** PROXIES CONFIG *********************
+server.set('trust proxy', true); 
+
 //****************** MIDDLEWARES *********************
 server.use(
   cors({
