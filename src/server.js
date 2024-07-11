@@ -57,4 +57,3 @@ server.listen(port, "0.0.0.0", () => {
   console.table(listEndpoints(server))
   console.log(`Server is running on port ${port}`)
 })
-// })
